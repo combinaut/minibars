@@ -9,9 +9,9 @@ module Minibars
 
     attr_reader :js
     
-    def initialize
+    def initialize(handlebars_file: nil)
       @js = MiniRacer::Context.new.tap do |js|
-        js.eval(HANDLE_BARS_FILE.read)
+        js.load(handlebars_file || HANDLE_BARS_FILE)
       end
     end
 
@@ -29,10 +29,14 @@ module Minibars
       Dir[helpers_pattern].each do |path|
         load_helper(path)
       end
+
+      self
     end
 
     def load_helper(path)
       @js.load(path)
+
+      self
     end
   end
 
@@ -51,6 +55,7 @@ module Minibars
 
     def compile
       @context.js.eval("#{name} = Handlebars.compile('#{content}')")
+
       self
     end
 

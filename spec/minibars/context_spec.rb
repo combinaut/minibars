@@ -1,6 +1,14 @@
 RSpec.describe Minibars::Context do
   subject(:context) { described_class.new }
 
+  context '#new' do
+    it 'should optionally accept a file for loading the handlebars runtime from' do
+      context = described_class.new(handlebars_file: "#{__dir__}/../../vendor/javascript/handlebars.js")
+
+      expect(context).to be_an_instance_of described_class
+    end
+  end
+
   context '#compile' do
     it 'should compile a handlebars template string into a Minibars::Template' do
       expect(context.compile('Hello {{ name }}')).to be_an_instance_of Minibars::Template

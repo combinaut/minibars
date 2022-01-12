@@ -15,36 +15,24 @@ module Minibars
       end
     end
 
-    def compile(template_string)
-      Template.compile(self, template_string)
+    def compile(content)
+      Template.compile(self, content)
     end
 
-    private
+    def register_partial(name, content)
+      @js.eval("Handlebars.registerPartial(#{name.to_json}, #{content.to_json})")
 
-    JS_ESCAPE_MAP = {
-        '\\'   => '\\\\',
-        '</'   => '<\/',
-        "\r\n" => '\n',
-        "\n"   => '\n',
-        "\r"   => '\n',
-        '"'    => '\\"',
-        "'"    => "\\'",
-        '`'    => '\\`',
-        '$'    => '\\$'
-      }.freeze
+      self
+    end
 
-    private_constant :JS_ESCAPE_MAP
-
-    def escape_javascript(javascript)
-      javascript = javascript.to_s
-      if javascript.empty?
-        ''
-      else
-        javascript.gsub(
-          %r{(\\|<\/|\r\n|\342\200\250|\342\200\251|[\n\r"']|[`]|[$])}u,
-          JS_ESCAPE_MAP
-        )
+    def load_helpers(helpers_pattern)
+      Dir[helpers_pattern].each do |path|
+        load_helper(path)
       end
+    end
+
+    def load_helper(path)
+      @js.load(path)
     end
   end
 

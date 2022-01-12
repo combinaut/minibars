@@ -25,7 +25,7 @@ RSpec.describe Minibars::Context do
 
   context '#load_helper' do
     it 'should add a helper from a file' do
-      context.load_helper(File.join("#{__dir__}/helpers/test.js"))
+      context.load_helper(File.join("#{__dir__}/helpers/shout.js"))
 
       expect(context.compile('Hello {{shout name}}!').call(name: 'Jane')).to eq 'Hello JANE!'
     end

@@ -13,6 +13,10 @@ RSpec.describe Minibars::Context do
     it 'should compile a handlebars template string into a Minibars::Template' do
       expect(context.compile('Hello {{ name }}')).to be_an_instance_of Minibars::Template
     end
+
+    it 'should compile handlebars templates that contain new lines' do
+      expect(context.compile("Hello \n {{ name }}").call(name: 'Jason')).to eq "Hello \n Jason"
+    end
   end
 
   context '#register_partial' do

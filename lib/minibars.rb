@@ -54,7 +54,7 @@ module Minibars
     end
 
     def compile
-      @context.js.eval("#{name} = Handlebars.compile('#{content}')")
+      @context.js.eval("#{name} = Handlebars.compile(#{content.to_json})")
 
       self
     end

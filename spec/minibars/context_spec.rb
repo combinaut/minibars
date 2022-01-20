@@ -3,7 +3,7 @@ RSpec.describe Minibars::Context do
 
   context '#new' do
     it 'should optionally accept a file for loading the handlebars runtime from' do
-      context = described_class.new(handlebars_file: "#{__dir__}/../../vendor/javascript/handlebars.js")
+      context = described_class.new(handlebars_file: Handlebars::Source.bundled_path)
 
       expect(context).to be_an_instance_of described_class
     end

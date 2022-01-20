@@ -10,6 +10,10 @@ An appropriately revised quote from the [Handlebars.rb][3] README:
 
 Minibars is a stripped down implmentation of [Handlerbars.rb][3] using [MiniRacer][1]. It eschews capabilities that require two-way binding with the JS runtime, making it a good upgrade path for those with simple Handlebars templates who need an upgrade path for their ARM64 architecture.
 
+# Why?
+
+Minibars is a stripped down implmentation of Handlerbars using MiniRacer. It eschews capabilities that require two-way binding with the JS runtime, making it a good upgrade path for those with simple Handlebars templates who need an upgrade path for their ARM64 architecture.
+
 # Usage
 
 ## Simple Stuff

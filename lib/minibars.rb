@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require 'mini_racer'
 require 'json'
+require 'mini_racer'
+require 'handlebars/source'
 
 # Make use of Handlebars templates from Ruby using mini_racer
 module Minibars
@@ -16,12 +17,10 @@ module Minibars
   #   template = minibars.compile("{{say}} {{what}}")
   #   template.call(:say => "Hey", :what => "Yuh!") #=> "Hey Yuh!"
   class Context
-    HANDLE_BARS_FILE = Pathname.new(__dir__).join('../vendor/javascript/handlebars.js')
-
     # Instantiate a new Minibars context, optionally, specify a handlebars file to load.
     #
     # @param handlebars_file [String]
-    def initialize(handlebars_file: HANDLE_BARS_FILE)
+    def initialize(handlebars_file: Handlebars::Source.bundled_path)
       @js = MiniRacer::Context.new.tap do |js|
         js.load(handlebars_file)
       end

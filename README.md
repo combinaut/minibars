@@ -22,7 +22,7 @@ Minibars is a stripped down implmentation of Handlerbars using MiniRacer. It esc
 require 'minibars'
 minibars = Minibars::Context.new
 template = minibars.compile("{{say}} {{what}}")
-template.call(:say => "Hey", :what => "Yuh!") #=> "Hey Yuh!"
+template.call(say: "Hey", what: "Yuh!") #=> "Hey Yuh!"
 ```
 
 ## Helpers
@@ -56,7 +56,6 @@ template.call(safe: Minibars::SafeString.new("<pre>Totally Safe!<pre>"))
 
 - No Ruby helpers
 - No functions as properties
-- No safe strings for now
 
 ## Security
 

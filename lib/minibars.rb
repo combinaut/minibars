@@ -4,6 +4,8 @@ require 'json'
 require 'mini_racer'
 require 'handlebars/source'
 
+require_relative 'minibars/safe_string'
+
 # Make use of Handlebars templates from Ruby using mini_racer
 module Minibars
   class Error < RuntimeError; end

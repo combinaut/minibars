@@ -34,6 +34,9 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.10.0)
     rspec-support (3.10.3)
+    webrick (1.7.0)
+    yard (0.9.27)
+      webrick (~> 1.7.0)
 
 PLATFORMS
   ruby
@@ -44,6 +47,7 @@ DEPENDENCIES
   pry-byebug
   rake
   rspec (~> 3.7)
+  yard
 
 BUNDLED WITH
    2.2.30

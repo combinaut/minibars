@@ -15,3 +15,4 @@ gemspec
 gem 'pry'
 gem 'pry-byebug'
 gem 'rake'
+gem 'yard'

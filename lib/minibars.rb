@@ -3,34 +3,70 @@
 require 'mini_racer'
 require 'json'
 
+# Make use of Handlebars templates from Ruby using mini_racer
 module Minibars
   class Error < RuntimeError; end
   EMPTY_HASH = {}.freeze
+  private_constant :EMPTY_HASH
 
+  # A context for compiling handlebars templates, registering partials, and loading helpers.
+  #
+  # @example
+  #   minibars = Minibars::Context.new
+  #   template = minibars.compile("{{say}} {{what}}")
+  #   template.call(:say => "Hey", :what => "Yuh!") #=> "Hey Yuh!"
   class Context
     HANDLE_BARS_FILE = Pathname.new(__dir__).join('../vendor/javascript/handlebars.js')
 
-    attr_reader :js
-
-    def initialize(handlebars_file: nil)
+    # Instantiate a new Minibars context, optionally, specify a handlebars file to load.
+    #
+    # @param handlebars_file [String]
+    def initialize(handlebars_file: HANDLE_BARS_FILE)
       @js = MiniRacer::Context.new.tap do |js|
-        js.load(handlebars_file || HANDLE_BARS_FILE)
+        js.load(handlebars_file)
       end
     end
 
-    def compile(content)
-      Template.compile(self, content)
+    # Compile the given template string and return a template object.
+    #
+    # @param template [String]
+    # @raise [Minibars::Error] if the template is not a string
+    #
+    # @return [Minibars::Template]
+    def compile(template)
+      Template.compile(self, @js, template)
     end
 
-    def register_partial(name, content)
+    # Register the partial with the given name.
+    #
+    # @example
+    #   minibars.register_partial("whoami", "I am {{who}}")
+    #   minibars.compile("{{>whoami}}").call(:who => 'Legend') #=> I am Legend
+    #
+    # @param name [String] partial name
+    # @param partial [String] partial content
+    #
+    # @raise [Minibars::Error] if the name or the partial content are not strings
+    # @return [Minibars::Context]
+    def register_partial(name, partial)
       raise Error, 'Partial name should be a string'    unless name.is_a?(String)
-      raise Error, 'Partial content should be a string' unless content.is_a?(String)
+      raise Error, 'Partial content should be a string' unless partial.is_a?(String)
 
-      @js.eval("Handlebars.registerPartial(#{name.to_json}, #{content.to_json})")
+      @js.eval("Handlebars.registerPartial(#{name.to_json}, #{partial.to_json})")
 
       self
     end
 
+    # Load JavaScript handlebars helpers from the directory specified by the given glob pattern.
+    #
+    # @example
+    #   minibars.load_helpers("#{__dir__}/javascripts/helpers/**/*.js")
+    #
+    # @see https://rubyapi.org/3.1/o/dir#method-c-glob Dir.glob
+    #
+    # @param helpers_pattern [String]
+    #
+    # @return [Minibars::Context]
     def load_helpers(helpers_pattern)
       Dir[helpers_pattern].each do |path|
         load_helper(path)
@@ -39,6 +75,14 @@ module Minibars
       self
     end
 
+    # Load a handlebars helper from a single JavaScript file.
+    #
+    # @example
+    #   minibars.load_helper("#{__dir__}/javascripts/helpers/admin.js")
+    #
+    # @param path [String]
+    #
+    # @return [Minibars::Context]
     def load_helper(path)
       @js.load(path)
 
@@ -46,29 +90,39 @@ module Minibars
     end
   end
 
+  # A compiled handlebars template.
   class Template
     attr_reader :content, :name
 
-    def self.compile(context, content)
-      new(context, content).compile
+    # @api private
+    def self.compile(context, js, content)
+      new(context, js, content).compile
     end
 
-    def initialize(context, content)
+    # @api private
+    def initialize(context, js, content)
       @content = content
       @context = context
+      @js      = js
       @name    = "Minibars_Template_#{hash_combine(@context.hash, @content.hash).abs}"
     end
 
+    # @api private
     def compile
       raise Error, 'Template content should be a string' unless content.is_a?(String)
 
-      @context.js.eval("#{name} = Handlebars.compile(#{content.to_json})")
+      @js.eval("#{name} = Handlebars.compile(#{content.to_json})")
 
       self
     end
 
+    # Render the template with the given parameters.
+    #
+    # @param params [Hash]
+    #
+    # @return [String]
     def call(params = EMPTY_HASH)
-      @context.js.eval("#{name}(#{JSON.generate params})")
+      @js.eval("#{name}(#{JSON.generate params})")
     end
 
     private

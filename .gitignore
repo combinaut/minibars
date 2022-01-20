@@ -8,3 +8,6 @@ spec/dummy/tmp/
 spec/dummy/.sass-cache
 *.gem
 .DS_Store
+.yardoc/
+doc/
+.tool-versions

@@ -10,10 +10,6 @@ An appropriately revised quote from the [Handlebars.rb][3] README:
 
 Minibars is a stripped down implmentation of [Handlerbars.rb][3] using [MiniRacer][1]. It eschews capabilities that require two-way binding with the JS runtime, making it a good upgrade path for those with simple Handlebars templates who need an upgrade path for their ARM64 architecture.
 
-# Why?
-
-Minibars is a stripped down implmentation of Handlerbars using MiniRacer. It eschews capabilities that require two-way binding with the JS runtime, making it a good upgrade path for those with simple Handlebars templates who need an upgrade path for their ARM64 architecture.
-
 # Usage
 
 ## Simple Stuff
@@ -23,6 +19,14 @@ require 'minibars'
 minibars = Minibars::Context.new
 template = minibars.compile("{{say}} {{what}}")
 template.call(say: "Hey", what: "Yuh!") #=> "Hey Yuh!"
+```
+
+## Functions as Properties
+
+This feature differs from [Handlebars.rb][3] since Minibars templates won't pass a `this` argument to property functions.
+
+```ruby
+template.call(say: "Hey ", what: ->{ ("yo" * 2) + "!"}) #=> "Hey yoyo!"
 ```
 
 ## Helpers
@@ -55,7 +59,6 @@ template.call(safe: Minibars::SafeString.new("<pre>Totally Safe!<pre>"))
 ## Limitations
 
 - No Ruby helpers
-- No functions as properties
 
 ## Security
 

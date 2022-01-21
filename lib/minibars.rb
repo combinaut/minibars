@@ -123,10 +123,22 @@ module Minibars
     #
     # @return [String]
     def call(params = EMPTY_HASH)
-      @js.eval("#{name}(#{JSON.generate params})")
+      @js.eval("#{name}(#{JSON.generate process_params(params)})")
     end
 
     private
+
+    def process_params(params)
+      return params if params.empty?
+
+      params.transform_values do |value|
+        if value.respond_to?(:call)
+          value.call
+        else
+          value
+        end
+      end
+    end
 
     def hash_combine(seed, hash)
       # a la boost, a la clojure

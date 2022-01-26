@@ -147,3 +147,9 @@ module Minibars
     end
   end
 end
+
+# Let's be as Handlebars.rb compatible as we can!
+  module Handlebars
+    Context = Minibars::Context unless defined? Context
+    SafeString = Minibars::SafeString unless defined? SafeString
+  end

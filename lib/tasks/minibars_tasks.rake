@@ -1,2 +1,0 @@
-namespace :minibars do
-end

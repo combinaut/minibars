@@ -12,6 +12,7 @@ gemspec
 
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
-
 gem 'pry'
 gem 'pry-byebug'
+gem 'rake'
+gem 'yard'

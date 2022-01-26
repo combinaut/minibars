@@ -7,8 +7,8 @@ require "minibars/version"
 Gem::Specification.new do |s|
   s.name        = "minibars"
   s.version     = Minibars::VERSION
-  s.authors     = ["Nicholas Jakobsen"]
-  s.email       = ["nicholas@combinaut.com"]
+  s.authors     = ["Nicholas Jakobsen", "Delon Newman"]
+  s.email       = ["nicholas@combinaut.com", "contact@delonnewman.name"]
   s.homepage    = "https://github.com/combinaut/minibars"
   s.summary     = "Minibars is a stripped down implmentation of Handlerbars using MiniRacer."
   s.description = "Minibars is a stripped down implmentation of Handlerbars using MiniRacer. It eschews capabilities that require two-way binding with the JS runtime, making it a good upgrade path for those with simple Handlebars templates who need an upgrade path for their ARM64 architecture."
@@ -16,9 +16,8 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  s.add_dependency 'rails', '~> 5.0'
+  s.add_dependency 'mini_racer', '~> 0.4.0'
+  s.add_dependency 'handlebars-source'
 
-  s.add_development_dependency 'combustion', '~> 1.3'
-  s.add_development_dependency 'mysql2', '~> 0.4.10'
-  s.add_development_dependency 'rspec-rails', '~> 3.7'
+  s.add_development_dependency 'rspec', '~> 3.7'
 end

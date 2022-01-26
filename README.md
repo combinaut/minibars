@@ -60,6 +60,10 @@ template.call(safe: Minibars::SafeString.new("<pre>Totally Safe!<pre>"))
 
 `Handlebars::Context` aliases `Minibars::Context` and `Handlebars::SafeString` aliases `Minibars::SafeString` unless they are already defined.
 
+```ruby
+require 'handlebars` # Applies the compatibility layer found in lib/handlebars.rb and loads minibars
+```
+
 ## Limitations
 
 - No Ruby helpers

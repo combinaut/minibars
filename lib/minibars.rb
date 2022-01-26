@@ -15,3 +15,9 @@ module Minibars
   EMPTY_HASH = {}.freeze
   private_constant :EMPTY_HASH
 end
+
+# Let's be as Handlebars.rb compatible as we can!
+  module Handlebars
+    Context = Minibars::Context unless defined? Context
+    SafeString = Minibars::SafeString unless defined? SafeString
+  end

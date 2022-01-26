@@ -56,6 +56,10 @@ template = minibars.compile("{{safe}}")
 template.call(safe: Minibars::SafeString.new("<pre>Totally Safe!<pre>"))
 ```
 
+## Compatibility
+
+`Handlebars::Context` aliases `Minibars::Context` and `Handlebars::SafeString` aliases `Minibars::SafeString` unless they are already defined.
+
 ## Limitations
 
 - No Ruby helpers

@@ -1,3 +1,5 @@
+![Tests](https://github.com/delonnewman/minibars/workflows/tests/badge.svg)
+
 # Minibars
 
 A (mostly) drop-in replacement for [Handlebars.rb][3] based on [MiniRacer][1] rather than [therubyracer][2].

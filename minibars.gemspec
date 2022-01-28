@@ -14,6 +14,18 @@ Gem::Specification.new do |s|
   s.description = "Minibars is a stripped down implementation of Handlerbars using MiniRacer. It eschews capabilities that require two-way binding with the JS runtime, making it a good choice for those with simple Handlebars templates who need an upgrade path for their ARM64 architecture."
   s.license     = "MIT"
 
+  if s.respond_to?(:metadata)
+    s.metadata["allowed_push_host"] = "https://rubygems.org"
+
+    s.metadata["homepage_uri"] = s.homepage
+    s.metadata["source_code_uri"] = s.homepage
+    s.metadata["changelog_uri"] = "#{s.homepage}/blob/master/CHANGELOG.md"
+    s.metadata["documentation_uri"] = "https://www.rubydoc.info/gems/minibars"
+  else
+    raise "RubyGems 2.0 or newer is required to protect against " \
+      "public gem pushes."
+  end
+
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
   s.add_dependency 'mini_racer', '~> 0.4.0'

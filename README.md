@@ -1,4 +1,4 @@
-![Tests](https://github.com/delonnewman/minibars/workflows/ci/badge.svg)
+![Tests](https://github.com/delonnewman/minibars/workflows/tests/badge.svg)
 
 # Minibars
 

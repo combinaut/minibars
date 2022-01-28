@@ -1,3 +1,5 @@
+require "handlebars"
+
 RSpec.describe Handlebars do
   describe "::Context" do
     it "should alias Minibars::Context" do
